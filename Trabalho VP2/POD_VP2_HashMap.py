@@ -11,21 +11,21 @@ class UserFactory(object):
         userNameLength = randint(3, 18)
         userHeight = round(uniform(0.50, 2.30), 2)
 
-        letters = ["a", "e", "i", "o", "u"]
+        vowel = ["a", "e", "i", "o", "u"]
         consonants = ["b", "c", "d", "f", "g", "h", "j", "l", "m",
                       "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z"]
-        lettersAndConsonants = letters + consonants
+        vowelAndConsonants = vowel + consonants
 
         for i in range(userNameLength):
             if i == 0:
                 userName = userName + \
-                    lettersAndConsonants[randint(
-                        0, len(lettersAndConsonants) - 1)]
-            elif i > 0 and userName[i - 1] in letters:
+                    vowelAndConsonants[randint(
+                        0, len(vowelAndConsonants) - 1)]
+            elif i > 0 and userName[i - 1] in vowel:
                 userName = userName + \
                     consonants[randint(0, len(consonants) - 1)]
             elif i > 0 and userName[i - 1] in consonants:
-                userName = userName + letters[randint(0, len(letters) - 1)]
+                userName = userName + vowel[randint(0, len(vowel) - 1)]
 
         return User(userName, userHeight)
 
@@ -119,12 +119,12 @@ class MainProgram(object):
 
     def main():
         while True:
-            print(" ### M E N U ###\n")
-            print(" 1 para inserir dados")
-            print(" 2 para pesquisar usuário")
-            print(" 3 para buscar usuário")
-            print(" 4 para listar todos os slots")
-            print(" 5 para sair\n")
+            print("\n ### M E N U ###\n")
+            print(" 1 - Inserir usuários")
+            print(" 2 - Pesquisar usuário")
+            print(" 3 - Buscar usuário")
+            print(" 4 - Listar slots")
+            print(" 5 - Sair\n")
 
             choice = input(" Digite uma das opções: ")
 
@@ -134,25 +134,25 @@ class MainProgram(object):
                 if(MainProgram.usersHash != None):
                     MainProgram.pesquisarDados()
                 else:
-                    print("\nNão há sequer uma tabela hash criada.")
+                    print("\n Não há sequer uma tabela hash criada.")
             elif choice == "3":
                 if(MainProgram.usersHash != None):
                     MainProgram.buscarDados()
                 else:
-                    print("\nNão há sequer uma tabela hash criada.")
+                    print("\n Não há sequer uma tabela hash criada.")
             elif choice == "4":
                 if(MainProgram.usersHash != None):
                     MainProgram.mostrarDados()
                 else:
-                    print("\nNão há sequer uma tabela hash criada.")
+                    print("\n Não há sequer uma tabela hash criada.")
             elif choice == "5":
                 return False
             else:
-                print("\nOpção inválida!")
+                print("\n Opção inválida!")
 
     def inserirdados():
         numeroDeRegistros = int(
-            input("\nQuantos registros deseja gerar e inserir? "))
+            input("\n Quantos registros deseja gerar e inserir? "))
 
         MainProgram.usersHash = HashMap(numeroDeRegistros)
         userFactory = UserFactory(numeroDeRegistros)
@@ -160,28 +160,28 @@ class MainProgram(object):
         for user in userFactory.users:
             MainProgram.usersHash.put(user.name, user)
 
-        print("\nDados criados e inseridos com sucesso!")
+        print("\n Dados criados e inseridos com sucesso!")
 
     def pesquisarDados():
-        chaveApesquisar = input("\nDigite o nome a pesquisar: ")
+        chaveApesquisar = input("\n Digite o nome do usuário: ")
 
         resultadoDaPesquisa = MainProgram.usersHash.get(chaveApesquisar)
 
         if (resultadoDaPesquisa != None):
-            print("\nDado encontrado no sistema!")
+            print("\n Usuário não encontrado nos registros!")
         else:
             print("\nDado não encontrado!")
 
     def buscarDados():
-        chaveApesquisar = input("\nDigite o nome do usuário a buscar: ")
+        chaveApesquisar = input("\n Digite o nome do usuário: ")
 
         resultadoDaPesquisa = MainProgram.usersHash.get(chaveApesquisar)
 
         if (resultadoDaPesquisa != None):
-            print("\nNome do usuário: ", resultadoDaPesquisa.name + "\n",
+            print(" Nome do usuário: ", resultadoDaPesquisa.name + "\n",
                   "Altura do usuário: ", resultadoDaPesquisa.height)
         else:
-            print(" Usuário não encontrado!")
+            print("\n Usuário não encontrado!")
 
     def mostrarDados():
         print(MainProgram.usersHash.slots)
